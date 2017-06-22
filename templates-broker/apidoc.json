@@ -1,0 +1,7 @@
+{
+  "name": "templates-broker",
+  "version": "1.0.0",
+  "description": "API de manipulação de templates",
+  "title": "Documentação - templates-broker",
+  "url":"http://<host>/templates-broker/service"
+}
