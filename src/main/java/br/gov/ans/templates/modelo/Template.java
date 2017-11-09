@@ -29,7 +29,8 @@ import org.hibernate.annotations.Type;
 @XmlRootElement
 @Entity
 @Table(schema="ANS_GERAL",name="TB_TEMPLATE_DOCUMENTO")
-@NamedQueries({@NamedQuery(name = "Template.recuperarPeloNome", query = "SELECT t FROM Template t WHERE upper(t.nome) = upper(:nome) AND t.dataExclusao is null")})
+@NamedQueries({@NamedQuery(name = "Template.recuperarPeloNome", query = "SELECT t FROM Template t WHERE upper(t.nome) = upper(:nome) AND t.dataExclusao is null"),
+	@NamedQuery(name = "Template.recuperarTemplateExcluidoPeloNome", query = "SELECT t FROM Template t WHERE upper(t.nome) = upper(:nome) AND t.dataExclusao is not null")})
 public class Template implements Serializable{
 
 	private static final long serialVersionUID = 1L;

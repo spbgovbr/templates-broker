@@ -81,7 +81,7 @@ public class TemplateResource {
 	 * @apiSuccess (Sucesso - 200) {String} resultado.template.exemplo Exemplo de request para preenchimento do template.
 	 * @apiSuccess (Sucesso - 200) {String} resultado.template.nome Identificador do template
 	 * @apiSuccess (Sucesso - 200) {String} resultado.template.responsavel Analista responsável pelo template.
-	 * @apiSuccess (Sucesso - 200) {Boolean} resultado.template.restrito Flag identificando se a atualização deste template � restrita.
+	 * @apiSuccess (Sucesso - 200) {Boolean} resultado.template.restrito Flag identificando se a atualização deste template é restrita.
 	 * 
 	 * @apiSuccessExample {json} Success-Response:
 	 *     HTTP/1.1 200 OK
@@ -139,7 +139,7 @@ public class TemplateResource {
 	 * @apiSuccess (Sucesso - 200) {String} template.exemplo Exemplo de request para preenchimento do template.
 	 * @apiSuccess (Sucesso - 200) {String} template.nome Identificador do template.
 	 * @apiSuccess (Sucesso - 200) {String} template.responsavel Analista responsável pelo template.
-	 * @apiSuccess (Sucesso - 200) {Boolean} template.restrito Flag identificando se a atualização deste template � restrita.
+	 * @apiSuccess (Sucesso - 200) {Boolean} template.restrito Flag identificando se a atualização deste template é restrita.
 	 * 
 	 * @apiSuccessExample {json} Success-Response:
 	 *     HTTP/1.1 200 OK
@@ -222,7 +222,7 @@ public class TemplateResource {
 	 * @apiParam (Request Body) {String} exemplo Exemplo de request para preenchimento do template.
 	 * @apiParam (Request Body) {String} nome Identificador do template.
 	 * @apiParam (Request Body) {String} responsavel Analista responsável pelo template.
-	 * @apiParam (Request Body) {String} restrito Flag identificando se a atualização deste template � restrita.
+	 * @apiParam (Request Body) {String} restrito Flag identificando se a atualização deste template é restrita.
 	 * 
 	 * @apiExample Exemplo de requisição:	
 	 *	endpoint: [PUT] http://<host>/templates-broker/service/templates/confirmacao-cadastro
@@ -286,7 +286,7 @@ public class TemplateResource {
 	 * @apiParam (Request Body) {String} exemplo Exemplo de request para preenchimento do template.
 	 * @apiParam (Request Body) {String} nome Identificador do template.
 	 * @apiParam (Request Body) {String} responsavel Analista responsável pelo template.
-	 * @apiParam (Request Body) {String} restrito Flag identificando se a atualização deste template � restrita.
+	 * @apiParam (Request Body) {String} restrito Flag identificando se a atualização deste template é restrita.
 	 * 
 	 * @apiExample Exemplo de requisição:	
 	 *	endpoint: [PUT] http://<host>/templates-broker/service/templates/confirmacao-cadastro
@@ -608,6 +608,55 @@ public class TemplateResource {
 		GenericEntity<List<Versao>> entity = new GenericEntity<List<Versao>>(versoes){};
 		
 		return Response.ok().entity(entity).build();
+	}
+	
+	
+	/**
+	 * @api {delete} /templates/excluidos/:template Recuperar template
+	 * @apiName undeleteTemplate
+	 * @apiGroup Template
+	 * @apiVersion 1.0.0
+	 * @apiPermission RO_ADMIN_TEMPLATE
+	 *
+	 * @apiDescription Recupera um template excluído.
+	 * 
+	 * @apiParam (Path Parameters) {String} template Identificador do template
+	 * 	
+	 * @apiExample Exemplo de requisição:	
+	 *	curl -X DELETE http://<host>/templates-broker/service/templates/excluidos/admp-template-novo-usuario
+	 *
+	 * @apiSuccessExample {json} Success-Response:
+	 *     HTTP/1.1 200 OK
+	 *     
+	 * @apiErrorExample {json} Error-Response:
+	 * 	HTTP/1.1 500 Internal Server Error
+	 * 	{
+	 *		"error":"Mensagem de erro."
+	 *		"code":"código do erro"
+	 *	}
+	 */
+	@DELETE
+	@Path("excluidos/{template}")
+	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	public Response undeleteTemplate(@PathParam("template") String nomeTemplate) throws ResourceNotFoundException{
+		Template template = getTemplateExcluido(nomeTemplate);
+		
+		template.setDataExclusao(null);
+		
+		daoTemplate.merge(template);
+		
+		return Response.ok().build();
+	}
+	
+	
+	public Template getTemplateExcluido(String nomeTemplate) throws ResourceNotFoundException{
+		Template template = daoTemplate.getTemplateExcluido(nomeTemplate);
+		
+		if(template == null){
+			throw new ResourceNotFoundException(messages.getMessage("erro.template.nao.encontrado", nomeTemplate));			
+		}
+		
+		return template;
 	}
 	
 	public void registrarHistoricoVersao(Template template){

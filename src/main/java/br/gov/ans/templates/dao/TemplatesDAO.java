@@ -79,6 +79,19 @@ public class TemplatesDAO {
 		return resultado.get(0);	
 	}
 	
+	public Template getTemplateExcluido(String nome){
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("nome", nome);
+		
+		List<Template> resultado = dao.executeNamedQuery("Template.recuperarTemplateExcluidoPeloNome", params);
+		
+		if(resultado.size() < 1){
+			return null;			
+		}
+		
+		return resultado.get(0);	
+	}
+	
 	public String AndOrWhere(StringBuilder sql){
 		if(sql.toString().contains("WHERE")){
 			return "AND";
