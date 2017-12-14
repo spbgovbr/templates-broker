@@ -3,24 +3,66 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.gov.ans</groupId>
 	<artifactId>templates-broker</artifactId>
-	<version>1.0</version>
+	<version>1.2</version>
 	<packaging>war</packaging>
 	<name>templates-broker</name>
 	<description>Sistema de gerenciamento de templates.</description>
 
-	<!-- CONFIGURAR VERSÃO DO JAVA PARA 1.8 -->
 	<build>
-	    <plugins>
-	        <plugin>
-	            <groupId>org.apache.maven.plugins</groupId>
-	            <artifactId>maven-compiler-plugin</artifactId>
-	            <version>3.1</version>
-	            <configuration>
-	                <source>1.8</source>
-	                <target>1.8</target>
-	            </configuration>
-	        </plugin>
-	    </plugins>
+		<plugins>
+			<plugin>
+				<groupId>org.wildfly.plugins</groupId>
+				<artifactId>wildfly-maven-plugin</artifactId>
+				<version>1.0.2.Final</version>
+				<configuration>
+					<timeout>60000</timeout>
+					<username>${username}</username>
+					<password>${password}</password>
+					<hostname>${hostname}</hostname>
+					<port>${port}</port>
+				</configuration>
+
+				<executions>
+					<!-- Remover war implantado -->
+					<execution>
+						<id>remover-pacote-impantado</id>
+						<phase>install</phase>
+						<goals>
+							<goal>undeploy</goal>
+						</goals>
+						<configuration>
+							<domain>
+								<serverGroups>
+									<server-group>${domain.group}</server-group>
+								</serverGroups>
+							</domain>
+							<ignoreMissingDeployment>true</ignoreMissingDeployment>
+							<match-pattern>${project.name}.*</match-pattern>
+							<matchPatternStrategy>fail</matchPatternStrategy>
+						</configuration>
+					</execution>
+
+					<!-- Implantar war -->
+					<execution>
+						<id>implantar-novo-pacote</id>
+						<phase>install</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+						<configuration>
+							<runtimeName>${project.name}</runtimeName>
+							<deployEnabled>true</deployEnabled>
+							<force>true</force>
+							<domain>
+								<server-groups>
+									<server-group>${domain.group}</server-group>
+								</server-groups>
+							</domain>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
 
 	<dependencies>

@@ -434,7 +434,7 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "restrito",
-            "description": "<p>Flag identificando se a atualização deste template � restrita.</p>"
+            "description": "<p>Flag identificando se a atualização deste template é restrita.</p>"
           }
         ]
       }
@@ -604,7 +604,7 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "restrito",
-            "description": "<p>Flag identificando se a atualização deste template � restrita.</p>"
+            "description": "<p>Flag identificando se a atualização deste template é restrita.</p>"
           }
         ]
       }
@@ -803,7 +803,7 @@ define({ "api": [
             "type": "Boolean",
             "optional": false,
             "field": "template.restrito",
-            "description": "<p>Flag identificando se a atualização deste template � restrita.</p>"
+            "description": "<p>Flag identificando se a atualização deste template é restrita.</p>"
           }
         ]
       },
@@ -1047,7 +1047,7 @@ define({ "api": [
             "type": "Boolean",
             "optional": false,
             "field": "resultado.template.restrito",
-            "description": "<p>Flag identificando se a atualização deste template � restrita.</p>"
+            "description": "<p>Flag identificando se a atualização deste template é restrita.</p>"
           }
         ]
       },

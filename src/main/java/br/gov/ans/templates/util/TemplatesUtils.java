@@ -22,7 +22,7 @@ public class TemplatesUtils {
 		try{
 			return Integer.parseInt(valor);			
 		}catch(Exception e){
-			throw new BusinessException("O valor '"+valor+"' n„o pode ser convertido para int.");
+			throw new BusinessException("O valor '"+valor+"' n√£o pode ser convertido para int.");
 		}		
 	}
 }

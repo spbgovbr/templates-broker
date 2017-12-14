@@ -48,6 +48,29 @@ public class TemplatesDAO {
 		return query.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Template> getTemplatesExcluidos(String filtro, Integer pagina, Integer qtdRegistros){
+		HashMap<String, Object> parametros =  new HashMap<String, Object>();
+		StringBuilder sql = new StringBuilder("SELECT t FROM Template t ");
+		
+		if(StringUtils.isNotBlank(filtro)){
+			sql.append("WHERE upper(t.nome) LIKE upper(:filtro) ");
+			parametros.put("filtro", "%"+filtro+"%");
+		}
+		
+		sql.append(AndOrWhere(sql) + " t.dataExclusao is not null ");
+		
+		sql.append("order by nome asc ");
+		
+		Query query = em.createQuery(sql.toString());
+		
+		setParametrosQuery(query, parametros);
+		
+		setPaginacaoQuery(query, pagina, qtdRegistros);
+		
+		return query.getResultList();
+	}
+	
 	public Long countTemplates(String filtro){
 		HashMap<String, Object> parametros =  new HashMap<String, Object>();
 		StringBuilder sql = new StringBuilder("SELECT count(t) FROM Template t ");
@@ -66,11 +89,42 @@ public class TemplatesDAO {
 		return (Long) query.getSingleResult();
 	}
 	
+	public Long countTemplatesExcluidos(String filtro){
+		HashMap<String, Object> parametros =  new HashMap<String, Object>();
+		StringBuilder sql = new StringBuilder("SELECT count(t) FROM Template t ");
+		
+		if(StringUtils.isNotBlank(filtro)){
+			sql.append("WHERE upper(t.nome) LIKE upper(:filtro) ");
+			parametros.put("filtro", "%"+filtro+"%");
+		}
+		
+		sql.append(AndOrWhere(sql) + " t.dataExclusao is not null ");
+		
+		Query query = em.createQuery(sql.toString());
+		
+		setParametrosQuery(query, parametros);
+		
+		return (Long) query.getSingleResult();
+	}
+	
 	public Template getTemplate(String nome){
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("nome", nome);
 		
 		List<Template> resultado = dao.executeNamedQuery("Template.recuperarPeloNome", params);
+		
+		if(resultado.size() < 1){
+			return null;			
+		}
+		
+		return resultado.get(0);	
+	}
+	
+	public Template getTemplateExcluido(String nome){
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("nome", nome);
+		
+		List<Template> resultado = dao.executeNamedQuery("Template.recuperarTemplateExcluidoPeloNome", params);
 		
 		if(resultado.size() < 1){
 			return null;			
