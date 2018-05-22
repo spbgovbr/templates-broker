@@ -225,7 +225,7 @@ public class TemplateResource {
 	 * @apiParam (Request Body) {String} restrito Flag identificando se a atualização deste template é restrita.
 	 * 
 	 * @apiExample Exemplo de requisição:	
-	 *	endpoint: [PUT] http://<host>/templates-broker/service/templates/confirmacao-cadastro
+	 *	endpoint: [POST] http://<host>/templates-broker/service/templates/confirmacao-cadastro
 	 *
 	 *	body:
 	 *     {
@@ -648,6 +648,69 @@ public class TemplateResource {
 		return Response.ok().build();
 	}
 	
+	/**
+	 * @api {get} /templates Listar templates excluídos
+	 * @apiName listTemplatesExcluidos
+	 * @apiGroup Template
+	 * @apiVersion 1.0.0
+	 * @apiPermission RO_ADMIN_TEMPLATE, RO_USUARIO_TEMPLATE
+	 *
+	 * @apiDescription Consulta os templates que foram excluídos.
+	 * 
+	 * @apiParam (Query Parameters) {String} [filtro] Valor utilizado para filtrar os templates.
+	 * @apiParam (Query Parameters) {String} [itens = 20] Quantidade de templates que serão exibidos
+	 * @apiParam (Query Parameters) {String} [pag = 1] Número da página
+	 * 
+	 * @apiExample Exemplo de requisição:	
+	 *	curl -i http://<host>/templates-broker/service/templates
+	 *
+	 * @apiSuccess (Sucesso - 200) {List} resultado Lista com os templates encontrados.
+	 * @apiSuccess (Sucesso - 200) {Template} resultado.template Objeto representando o template.
+	 * @apiSuccess (Sucesso - 200) {String} resultado.template.corpo Corpo do template, conteúdo que as aplicações usarão para preencher e exibir os dados.
+	 * @apiSuccess (Sucesso - 200) {String} resultado.template.dataCadastro Data de cadastro do template.
+	 * @apiSuccess (Sucesso - 200) {String} resultado.template.dataCadastro Data de exclusao do template.
+	 * @apiSuccess (Sucesso - 200) {String} resultado.template.descricao Descrição do template.
+	 * @apiSuccess (Sucesso - 200) {String} resultado.template.exemplo Exemplo de request para preenchimento do template.
+	 * @apiSuccess (Sucesso - 200) {String} resultado.template.nome Identificador do template
+	 * @apiSuccess (Sucesso - 200) {String} resultado.template.responsavel Analista responsável pelo template.
+	 * @apiSuccess (Sucesso - 200) {Boolean} resultado.template.restrito Flag identificando se a atualização deste template é restrita.
+	 * 
+	 * @apiSuccessExample {json} Success-Response:
+	 *     HTTP/1.1 200 OK
+	 *     {
+	 *       "corpo": "Prezado {{fulano}}, seu cadastro foi realizado com sucesso.",
+	 *       "dataCadastro": "2017-03-14T16:57:47.405-03:00",
+	 *       "descricao": "Template de confirmação de cadastro.",
+	 *       "exemplo": "{"fulano":"André Guimarães"}",
+	 *       "nome": "confirmacao-cadastro",
+	 *       "responsavel": "andre.guimaraes",
+	 *       "restrito": false,
+	 *       "dataExclusao":"2017-08-14T16:57:47.405-03:00"
+	 *     }
+	 * 
+	 * @apiErrorExample {json} Error-Response:
+	 * 	HTTP/1.1 500 Internal Server Error
+	 * 	{
+	 *		"error":"Mensagem de erro."
+	 *		"code":"código do erro"
+	 *	}
+	 */
+	@GET
+	@Path("excluidos")
+	@Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	public Response listTemplatesExcluidos(@QueryParam("filtro") String filtro, @QueryParam("pag") String pagina, @QueryParam("itens") String tamanhoPagina) throws BusinessException, ResourceNotFoundException{
+		List<Template> templates = daoTemplate.getTemplatesExcluidos(filtro, pagina == null? null:parseInt(pagina), tamanhoPagina == null? null : parseInt(tamanhoPagina));
+		
+		if(templates.isEmpty()){
+			throw new ResourceNotFoundException(messages.getMessage("templates.nao.encontrados.filtro",filtro));
+		}
+		
+		GenericEntity<List<Template>> entity = new GenericEntity<List<Template>>(templates){};
+		
+		Long totalRegistros = daoTemplate.countTemplatesExcluidos(filtro);
+				
+		return Response.ok().entity(entity).header("total_registros", totalRegistros).build(); 
+	}
 	
 	public Template getTemplateExcluido(String nomeTemplate) throws ResourceNotFoundException{
 		Template template = daoTemplate.getTemplateExcluido(nomeTemplate);

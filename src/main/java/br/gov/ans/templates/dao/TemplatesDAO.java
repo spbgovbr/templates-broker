@@ -48,6 +48,29 @@ public class TemplatesDAO {
 		return query.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Template> getTemplatesExcluidos(String filtro, Integer pagina, Integer qtdRegistros){
+		HashMap<String, Object> parametros =  new HashMap<String, Object>();
+		StringBuilder sql = new StringBuilder("SELECT t FROM Template t ");
+		
+		if(StringUtils.isNotBlank(filtro)){
+			sql.append("WHERE upper(t.nome) LIKE upper(:filtro) ");
+			parametros.put("filtro", "%"+filtro+"%");
+		}
+		
+		sql.append(AndOrWhere(sql) + " t.dataExclusao is not null ");
+		
+		sql.append("order by nome asc ");
+		
+		Query query = em.createQuery(sql.toString());
+		
+		setParametrosQuery(query, parametros);
+		
+		setPaginacaoQuery(query, pagina, qtdRegistros);
+		
+		return query.getResultList();
+	}
+	
 	public Long countTemplates(String filtro){
 		HashMap<String, Object> parametros =  new HashMap<String, Object>();
 		StringBuilder sql = new StringBuilder("SELECT count(t) FROM Template t ");
@@ -58,6 +81,24 @@ public class TemplatesDAO {
 		}
 		
 		sql.append(AndOrWhere(sql) + " t.dataExclusao is null ");
+		
+		Query query = em.createQuery(sql.toString());
+		
+		setParametrosQuery(query, parametros);
+		
+		return (Long) query.getSingleResult();
+	}
+	
+	public Long countTemplatesExcluidos(String filtro){
+		HashMap<String, Object> parametros =  new HashMap<String, Object>();
+		StringBuilder sql = new StringBuilder("SELECT count(t) FROM Template t ");
+		
+		if(StringUtils.isNotBlank(filtro)){
+			sql.append("WHERE upper(t.nome) LIKE upper(:filtro) ");
+			parametros.put("filtro", "%"+filtro+"%");
+		}
+		
+		sql.append(AndOrWhere(sql) + " t.dataExclusao is not null ");
 		
 		Query query = em.createQuery(sql.toString());
 		
