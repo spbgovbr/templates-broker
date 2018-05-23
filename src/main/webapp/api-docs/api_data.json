@@ -23,36 +23,8 @@
     "url": "",
     "version": "0.0.0",
     "filename": "templates-broker/src/main/webapp/api-docs/main.js",
-    "group": "C__ANS_ans_templates_templates_broker_src_main_webapp_api_docs_main_js",
-    "groupTitle": "C__ANS_ans_templates_templates_broker_src_main_webapp_api_docs_main_js",
-    "name": ""
-  },
-  {
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "optional": false,
-            "field": "varname1",
-            "description": "<p>No type.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "varname2",
-            "description": "<p>With type.</p>"
-          }
-        ]
-      }
-    },
-    "type": "",
-    "url": "",
-    "version": "0.0.0",
-    "filename": "templates-broker/target/templates-broker-0.1/api-docs/main.js",
-    "group": "C__ANS_ans_templates_templates_broker_target_templates_broker_0_1_api_docs_main_js",
-    "groupTitle": "C__ANS_ans_templates_templates_broker_target_templates_broker_0_1_api_docs_main_js",
+    "group": "C__git_templates_broker_src_main_webapp_api_docs_main_js",
+    "groupTitle": "C__git_templates_broker_src_main_webapp_api_docs_main_js",
     "name": ""
   },
   {
@@ -442,7 +414,7 @@
     "examples": [
       {
         "title": "Exemplo de requisição:\t",
-        "content": "\tendpoint: [PUT] http://<host>/templates-broker/service/templates/confirmacao-cadastro\n\n\tbody:\n    {\n      \"corpo\": \"Prezado {{fulano}}, seu cadastro foi realizado com sucesso.\",\n      \"descricao\": \"Template de confirmação de cadastro.\",\n      \"exemplo\": \"{\"fulano\":\"André Guimarães\"}\",\n      \"nome\": \"confirmacao-cadastro\",\n      \"responsavel\": \"andre.guimaraes\",\n      \"restrito\": true,\n    }",
+        "content": "\tendpoint: [POST] http://<host>/templates-broker/service/templates/confirmacao-cadastro\n\n\tbody:\n    {\n      \"corpo\": \"Prezado {{fulano}}, seu cadastro foi realizado com sucesso.\",\n      \"descricao\": \"Template de confirmação de cadastro.\",\n      \"exemplo\": \"{\"fulano\":\"André Guimarães\"}\",\n      \"nome\": \"confirmacao-cadastro\",\n      \"responsavel\": \"andre.guimaraes\",\n      \"restrito\": true,\n    }",
         "type": "json"
       }
     ],
@@ -1055,6 +1027,197 @@
         {
           "title": "Success-Response:",
           "content": "HTTP/1.1 200 OK\n{\n  \"corpo\": \"Prezado {{fulano}}, seu cadastro foi realizado com sucesso.\",\n  \"dataCadastro\": \"2017-03-14T16:57:47.405-03:00\",\n  \"descricao\": \"Template de confirmação de cadastro.\",\n  \"exemplo\": \"{\"fulano\":\"André Guimarães\"}\",\n  \"nome\": \"confirmacao-cadastro\",\n  \"responsavel\": \"andre.guimaraes\",\n  \"restrito\": false\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n\t\"error\":\"Mensagem de erro.\"\n\t\"code\":\"código do erro\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "templates-broker/src/main/java/br/gov/ans/templates/rest/TemplateResource.java",
+    "groupTitle": "Template"
+  },
+  {
+    "type": "get",
+    "url": "/templates",
+    "title": "Listar templates excluídos",
+    "name": "listTemplatesExcluidos",
+    "group": "Template",
+    "version": "1.0.0",
+    "permission": [
+      {
+        "name": "RO_ADMIN_TEMPLATE, RO_USUARIO_TEMPLATE"
+      }
+    ],
+    "description": "<p>Consulta os templates que foram excluídos.</p>",
+    "parameter": {
+      "fields": {
+        "Query Parameters": [
+          {
+            "group": "Query Parameters",
+            "type": "String",
+            "optional": true,
+            "field": "filtro",
+            "description": "<p>Valor utilizado para filtrar os templates.</p>"
+          },
+          {
+            "group": "Query Parameters",
+            "type": "String",
+            "optional": true,
+            "field": "itens",
+            "defaultValue": "20",
+            "description": "<p>Quantidade de templates que serão exibidos</p>"
+          },
+          {
+            "group": "Query Parameters",
+            "type": "String",
+            "optional": true,
+            "field": "pag",
+            "defaultValue": "1",
+            "description": "<p>Número da página</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Exemplo de requisição:\t",
+        "content": "curl -i http://<host>/templates-broker/service/templates",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "fields": {
+        "Sucesso - 200": [
+          {
+            "group": "Sucesso - 200",
+            "type": "List",
+            "optional": false,
+            "field": "resultado",
+            "description": "<p>Lista com os templates encontrados.</p>"
+          },
+          {
+            "group": "Sucesso - 200",
+            "type": "Template",
+            "optional": false,
+            "field": "resultado.template",
+            "description": "<p>Objeto representando o template.</p>"
+          },
+          {
+            "group": "Sucesso - 200",
+            "type": "String",
+            "optional": false,
+            "field": "resultado.template.corpo",
+            "description": "<p>Corpo do template, conteúdo que as aplicações usarão para preencher e exibir os dados.</p>"
+          },
+          {
+            "group": "Sucesso - 200",
+            "type": "String",
+            "optional": false,
+            "field": "resultado.template.dataCadastro",
+            "description": "<p>Data de cadastro do template.</p>"
+          },
+          {
+            "group": "Sucesso - 200",
+            "type": "String",
+            "optional": false,
+            "field": "resultado.template.descricao",
+            "description": "<p>Descrição do template.</p>"
+          },
+          {
+            "group": "Sucesso - 200",
+            "type": "String",
+            "optional": false,
+            "field": "resultado.template.exemplo",
+            "description": "<p>Exemplo de request para preenchimento do template.</p>"
+          },
+          {
+            "group": "Sucesso - 200",
+            "type": "String",
+            "optional": false,
+            "field": "resultado.template.nome",
+            "description": "<p>Identificador do template</p>"
+          },
+          {
+            "group": "Sucesso - 200",
+            "type": "String",
+            "optional": false,
+            "field": "resultado.template.responsavel",
+            "description": "<p>Analista responsável pelo template.</p>"
+          },
+          {
+            "group": "Sucesso - 200",
+            "type": "Boolean",
+            "optional": false,
+            "field": "resultado.template.restrito",
+            "description": "<p>Flag identificando se a atualização deste template é restrita.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK\n{\n  \"corpo\": \"Prezado {{fulano}}, seu cadastro foi realizado com sucesso.\",\n  \"dataCadastro\": \"2017-03-14T16:57:47.405-03:00\",\n  \"descricao\": \"Template de confirmação de cadastro.\",\n  \"exemplo\": \"{\"fulano\":\"André Guimarães\"}\",\n  \"nome\": \"confirmacao-cadastro\",\n  \"responsavel\": \"andre.guimaraes\",\n  \"restrito\": false,\n  \"dataExclusao\":\"2017-08-14T16:57:47.405-03:00\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "error": {
+      "examples": [
+        {
+          "title": "Error-Response:",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n\t\"error\":\"Mensagem de erro.\"\n\t\"code\":\"código do erro\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "filename": "templates-broker/src/main/java/br/gov/ans/templates/rest/TemplateResource.java",
+    "groupTitle": "Template"
+  },
+  {
+    "type": "delete",
+    "url": "/templates/excluidos/:template",
+    "title": "Recuperar template",
+    "name": "undeleteTemplate",
+    "group": "Template",
+    "version": "1.0.0",
+    "permission": [
+      {
+        "name": "RO_ADMIN_TEMPLATE"
+      }
+    ],
+    "description": "<p>Recupera um template excluído.</p>",
+    "parameter": {
+      "fields": {
+        "Path Parameters": [
+          {
+            "group": "Path Parameters",
+            "type": "String",
+            "optional": false,
+            "field": "template",
+            "description": "<p>Identificador do template</p>"
+          }
+        ]
+      }
+    },
+    "examples": [
+      {
+        "title": "Exemplo de requisição:\t",
+        "content": "curl -X DELETE http://<host>/templates-broker/service/templates/excluidos/admp-template-novo-usuario",
+        "type": "json"
+      }
+    ],
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 OK",
           "type": "json"
         }
       ]
