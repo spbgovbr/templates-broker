@@ -79,8 +79,7 @@ public class DAO<T> implements Serializable{
 		
 		return query;
 	}
-	
-	
+		
 	@Transactional
 	@SuppressWarnings("unchecked")
 	public List<T> getPaginatedResultList(int first, int pageSize) {
