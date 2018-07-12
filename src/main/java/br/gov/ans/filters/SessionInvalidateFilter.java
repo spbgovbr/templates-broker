@@ -21,7 +21,6 @@ public class SessionInvalidateFilter implements ContainerResponseFilter{
 	@Inject
 	private Logger logger;
 	
-	@Override
 	public void filter(ContainerRequestContext requestContext, ContainerResponseContext responseContext)
 			throws IOException {
 		try{			
