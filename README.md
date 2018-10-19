@@ -1,9 +1,9 @@
-# Templates-broker - API de manutenção e fornecimento de templates.
-O Templates-broker é uma API para fornecimento de templates para geração de conteúdo dinâmico, podendo ser utilizado para gerar documentos, e-mails, relatórios, páginas e mais. A ideia é que a estrutura do template não faça parte da aplicação, podendo ser editada a qualquer momento e compartilhada com outras aplicações. O acesso ao template é feito através de uma chave de identificação e o preenchimento deverá ser feito pelo cliente.
+# Templates-broker - API de manutenção e provimento de templates.
+O Templates-broker é uma API que provê modelos de documentos para geração de conteúdo dinâmico, podendo ser utilizado para gerar documentos, e-mails, relatórios, páginas em HTML e mais. A ideia é que a estrutura dos modelos não faça parte da aplicação, podendo ser editada a qualquer momento e compartilhada com outras aplicações. O acesso ao modelo é feito através de uma chave de identificação e o preenchimento deverá ser feito pelo cliente.
 
-O broker não faz nenhum tipo de tratamento sobre o conteúdo do template e diversas engines podem ser utilizadas, mas inicialmente ele foi desenvolvido para ser utilizado com templates feitos em **[mustache](https://mustache.github.io/)**. O suporte a diversas linguagens faz com que o mustache seja uma ótima opção.
+O broker não faz nenhum tipo de tratamento sobre o conteúdo do modelo e diversas engines podem ser utilizadas, mas inicialmente ele foi desenvolvido para ser utilizado com modelos feitos em **[mustache](https://mustache.github.io/)**. O suporte a diversas linguagens faz com que o mustache seja uma ótima opção.
 
-Os templates são armazenados em banco e a cada atualização a versão anterior é adicionada ao histórico. Os templates podem ser alterados e recuperados sem que haja qualquer indisponibilidade das aplicações.
+Os modelos são armazenados em banco e a cada atualização a versão anterior é adicionada ao histórico. Os modelos podem ser alterados e recuperados sem que haja qualquer indisponibilidade das aplicações.
 
 ## Requisitos
 - Código-fonte do Broker pode ser baixado a partir do link https://softwarepublico.gov.br/gitlab/ans/templates-broker/tags](https://softwarepublico.gov.br/gitlab/ans/templates-broker/tags "Clique e acesse")
