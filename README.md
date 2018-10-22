@@ -1,4 +1,4 @@
-# Templates-broker - API de manutenção e provimento de templates.
+# Templates-broker - API de manutenção e provisão de modelos de documento
 O Templates-broker é uma API que provê modelos de documentos para geração de conteúdo dinâmico, podendo ser utilizado para gerar documentos, e-mails, relatórios, páginas em HTML e mais. A ideia é que a estrutura dos modelos não faça parte da aplicação, podendo ser editada a qualquer momento e compartilhada com outras aplicações. O acesso ao modelo é feito através de uma chave de identificação e o preenchimento deverá ser feito pelo cliente.
 
 O broker não faz nenhum tipo de tratamento sobre o conteúdo do modelo e diversas engines podem ser utilizadas, mas inicialmente ele foi desenvolvido para ser utilizado com modelos feitos em **[mustache](https://mustache.github.io/)**. O suporte a diversas linguagens faz com que o mustache seja uma ótima opção.
