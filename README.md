@@ -6,7 +6,7 @@ O broker não faz nenhum tipo de tratamento sobre o conteúdo do modelo e divers
 Os modelos são armazenados em banco e a cada atualização a versão anterior é adicionada ao histórico. Os modelos podem ser alterados e recuperados sem que haja qualquer indisponibilidade das aplicações.
 
 ## Requisitos
-- Código-fonte do Broker pode ser baixado a partir do link https://softwarepublico.gov.br/gitlab/ans/templates-broker/tags](https://softwarepublico.gov.br/gitlab/ans/templates-broker/tags "Clique e acesse")
+- Código-fonte do Broker pode ser baixado a partir do link [https://softwarepublico.gov.br/gitlab/ans/templates-broker/tags](https://softwarepublico.gov.br/gitlab/ans/templates-broker/tags)
 - [Apache Maven](https://maven.apache.org/) para baixar as dependências e compilar o pacote.
 - Servidor [JBoss EAP 7.0.4](https://developers.redhat.com/products/eap/download/) ou [Wildfly 10](http://wildfly.org/downloads/).
 - Banco relacional, o Broker foi desenvolvido usando Oracle 12g, mas com pouco esforço pode utilizar o MySQL.
