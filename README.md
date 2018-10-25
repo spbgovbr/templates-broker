@@ -62,3 +62,7 @@ Existem duas roles de acesso ao Broker, uma com acesso administrativo e outra so
 | --------------------- | ------------------------- |
 | RO_ADMIN_TEMPLATE		| Perfil de administração	|
 | RO_USUARIO_TEMPLATE	| Perfil de consulta		|
+
+## Projetos Relacionados
+* [SEI-Broker](https://softwarepublico.gov.br/gitlab/ans/sei-broker/wikis/home)
+* [Gerenciador de Templates](https://softwarepublico.gov.br/gitlab/ans/gerenciador-de-templates/wikis/home)
