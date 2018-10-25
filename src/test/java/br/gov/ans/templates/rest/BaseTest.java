@@ -1,4 +1,4 @@
-package br.gov.ans.templates.teste;
+package br.gov.ans.templates.rest;
 
 
 import org.junit.BeforeClass;

@@ -1,4 +1,4 @@
-package br.gov.ans.templates.teste;
+package br.gov.ans.templates.rest;
 
 
 import static com.jayway.restassured.RestAssured.given;
@@ -12,7 +12,7 @@ import org.junit.runners.MethodSorters;
 import br.gov.ans.templates.to.Template;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-public class TemplateTest extends BaseTest{	
+public class TemplateResourceTest extends BaseTest{	
 			
 	private static final String nomeTemplate = "teste-auto-" + LocalDateTime.now();
 	
